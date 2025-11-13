@@ -36,6 +36,7 @@ No* criarNo (const char* valor)
     return novo;
 }
 
+//criar função de inserir nó.
 No* inserir(No* raiz, const char*valor)
 {
     if (raiz == NULL)
