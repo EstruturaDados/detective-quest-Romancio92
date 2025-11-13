@@ -35,3 +35,20 @@ No* criarNo (const char* valor)
     novo->direita = NULL;
     return novo;
 }
+
+No* inserir(No* raiz, const char*valor)
+{
+    if (raiz == NULL)
+    {
+        return criarNo(valor);
+    }
+    if (strcmp(valor, raiz->valor) < 0);
+    {
+        raiz->esquerda = inserir(raiz->esquerda, valor);
+    }
+    else
+    {
+        raiz->direita = inserir(raiz->direita, valor);
+    }
+    return raiz;
+}
