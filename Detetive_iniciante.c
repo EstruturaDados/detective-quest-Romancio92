@@ -4,8 +4,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct No
+{
+    char valor[50];
+    struct No* esquerda;
+    struct No* direita;
+
+} No;
+
 //inicialização da função main.
-int main 
+int main ()
 {
 
 
@@ -13,3 +21,17 @@ int main
 }
 
 //definição de funções.
+//definição de função para criar nó.
+No* criarNo (const char* valor)
+{
+    No* novo =  (No*) malloc(sizeof(No));
+    if (novo == NULL)
+    {
+        printf("Erro ao alocar memória!\n");
+        exit(1);
+    }
+    strcpy(novo->valor, valor);
+    novo->esquerda = NULL;
+    novo->direita = NULL;
+    return novo;
+}
