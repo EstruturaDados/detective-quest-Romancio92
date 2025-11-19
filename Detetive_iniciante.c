@@ -53,3 +53,44 @@ No* inserir(No* raiz, const char*valor)
     }
     return raiz;
 }
+
+void preOrdem (No *raiz)
+{
+    if (raiz != NULL)
+    {
+        printf("%s", raiz->valor);
+        preOrdem(raiz->esquerda);
+        preOrdem(raiz->direita);
+    }
+}
+
+void emOrdem (No *raiz)
+{
+    if (raiz != NULL)
+    {
+        emOrdem(raiz->esquerda);
+        printf("%s", raiz->valor);
+        preOrdem(raiz->direita);
+    }
+}
+
+void posOrdem (No *raiz)
+{
+    if (raiz != NULL)
+    {
+        emOrdem(raiz->esquerda);
+        preOrdem(raiz->direita);
+        printf("%s", raiz->valor);
+    }
+}
+
+void liberar(No *raiz)
+{
+    if (raiz != NULL)
+    {
+        liberar(raiz->esquerda);
+        liberar(raiz->direita);
+        free(raiz);
+    }
+}
+
