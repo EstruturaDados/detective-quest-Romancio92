@@ -15,7 +15,26 @@ typedef struct No
 //inicialização da função main.
 int main ()
 {
+    No *raiz = NULL;
 
+    raiz = inserir(raiz, "Hall de Entrada");
+    raiz = inserir(raiz, "Sala de Estar");
+    raiz = inserir(raiz, "Biblioteca");
+    raiz = inserir(raiz, "Quarto");
+
+    printf("Pre-ordem: ");
+    preOrdem(raiz);
+    printf(\n);
+
+    printf("Em ordem: ");
+    emOrdem(raiz);
+    printf(\n);
+
+    printf("Pos ordem: ");
+    posOrdem(raiz);
+    printf(\n);
+
+    liberar(raiz);
 
     return 0;
 }
