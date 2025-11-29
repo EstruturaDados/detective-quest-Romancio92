@@ -26,6 +26,7 @@ int main()
     raiz->direita->direita = criarSala("Varanda");
 
     printf("Detetive encontra-se na entrada da mansão: %s", raiz);
+    
     do
     {
         printf("\n#### MENU DE PERCURSO ####\n");        
