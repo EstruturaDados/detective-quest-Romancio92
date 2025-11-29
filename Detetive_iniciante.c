@@ -1,123 +1,172 @@
-
-//inclusão de bibliotecas.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct No
+typedef struct Sala
 {
-    char valor[50];
-        struct No* esquerda;
-            struct No* direita;
+    char nome[50];
+    struct Sala *esquerda;
+    struct Sala *direita;
+} Sala;
 
-            } No;
+Sala *criarSala(char *nomecomodo); 
+void liberar(Sala *raiz);
+void posOrdem(Sala *raiz);
 
-            No* criarNo (const char* valor);
-            No* inserir(No* raiz, const char*valor);
-            void preOrdem (No *raiz);
-            void emOrdem (No *raiz);
-            void posOrdem (No *raiz);
-            void liberar(No *raiz);
+int main()
+{
+    int opcao;
 
-            //inicialização da função main.
-            int main ()
-            {
-                No *raiz = NULL;
+    Sala *raiz = criarSala("Hall de Entrada");
+    raiz->esquerda = criarSala("Sala de Estar");
+    raiz->direita = criarSala("Biblioteca");
+    raiz->esquerda->esquerda = criarSala("Quarto");
+    raiz->esquerda->direita = criarSala("Cozinha");
+    raiz->direita->esquerda = criarSala("Porão");
+    raiz->direita->direita = criarSala("Varanda");
 
-                    raiz = inserir(raiz, "Hall de Entrada");
-                        raiz = inserir(raiz, "Sala de Estar");
-                            raiz = inserir(raiz, "Biblioteca");
-                                raiz = inserir(raiz, "Quarto");
 
-                                    printf("Pre-ordem: ");
-                                        preOrdem(raiz);
-                                            printf("\n");
+    do
+    {
+        printf("\n#### MENU DE PERCURSO ####\n");        
+        printf("1. Esquerda.\n");
+        printf("2. Direita.\n");
+        printf("0. liberar e sair.\n");
+        printf("\nEscolha uma das opções: \n");
+        scanf("%i", &opcao);
 
-                                                printf("Em ordem: ");
-                                                    emOrdem(raiz);
-                                                        printf("\n");
+        switch (opcao)
+        {
+            case 1:
+                printf("Detetive entrou no cômodo: %s", raiz->esquerda);
 
-                                                            printf("Pos ordem: ");
-                                                                posOrdem(raiz);
-                                                                    printf("\n");
+                
+                do
+                {
+                    printf("\n#### MENU DE PERCURSO 2 ####\n");        
+                    printf("11. Esquerda.\n");
+                    printf("12. Direita.\n");
+                    printf("0. liberar e sair.\n");
+                    printf("\nEscolha uma das opções: \n");
+                    scanf("%i", &opcao);
 
-                                                                        liberar(raiz);
+                    switch (opcao)
+                    {
 
-                                                                            return 0;
-                                                                            }
+                        case 11:
+                            printf("Detetive entrou no cômodo: %s", raiz->esquerda->esquerda);
+                            break;
 
-                                                                            //definição de funções.
-                                                                            //definição de função para criar nó.
-                                                                            No* criarNo (const char* valor)
-                                                                            {
-                                                                                No* novo =  (No*) malloc(sizeof(No));
-                                                                                    if (novo == NULL)
-                                                                                        {
-                                                                                                printf("Erro ao alocar memória!\n");
-                                                                                                        exit(1);
-                                                                                                            }
-                                                                                                                strcpy(novo->valor, valor);
-                                                                                                                    novo->esquerda = NULL;
-                                                                                                                        novo->direita = NULL;
-                                                                                                                            return novo;
-                                                                                                                            }
+                        case 12:
+                            printf("Detetive entrou no cômodo: %s", raiz->esquerda->direita);
+                            break;       
+                        case 0:
+                            posOrdem(raiz);
+                            printf("\n");            
+                            liberar(raiz);
+                            printf("saindo do sistema...");
+                            break;
+                            
+                        default:
+                            printf("Opção inválida! Tente novamente.");
+                            break;
 
-                                                                                                                            //criar função de inserir nó.
-                                                                                                                            No* inserir(No* raiz, const char*valor)
-                                                                                                                            {
-                                                                                                                                if (raiz == NULL)
-                                                                                                                                    {
-                                                                                                                                            return criarNo(valor);
-                                                                                                                                                }
+                        
+                    } 
+                } while (opcao != 0);
 
-                                                                                                                                                    if (strcmp(valor, raiz->valor) < 0)
-                                                                                                                                                        {
-                                                                                                                                                                raiz->esquerda = inserir(raiz->esquerda, valor);
-                                                                                                                                                                    }
-                                                                                                                                                                        else
-                                                                                                                                                                            {
-                                                                                                                                                                                    raiz->direita = inserir(raiz->direita, valor);
-                                                                                                                                                                                        }
-                                                                                                                                                                                            return raiz;
-                                                                                                                                                                                            }
+                break;
 
-                                                                                                                                                                                            void preOrdem (No *raiz)
-                                                                                                                                                                                            {
-                                                                                                                                                                                                if (raiz != NULL)
-                                                                                                                                                                                                    {
-                                                                                                                                                                                                            printf("%s", raiz->valor);
-                                                                                                                                                                                                                    preOrdem(raiz->esquerda);
-                                                                                                                                                                                                                            preOrdem(raiz->direita);
-                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                }
+            case 2:
+                printf("Detetive entrou no cômodo: %s", raiz->direita);
 
-                                                                                                                                                                                                                                void emOrdem (No *raiz)
-                                                                                                                                                                                                                                {
-                                                                                                                                                                                                                                    if (raiz != NULL)
-                                                                                                                                                                                                                                        {
-                                                                                                                                                                                                                                                emOrdem(raiz->esquerda);
-                                                                                                                                                                                                                                                        printf("%s", raiz->valor);
-                                                                                                                                                                                                                                                                preOrdem(raiz->direita);
-                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                    }
+                do
+                {
+                    printf("\n#### MENU DE PERCURSO 2 ####\n");        
+                    printf("21. Esquerda.\n");
+                    printf("22. Direita.\n");
+                    printf("0. liberar e sair.\n");
+                    printf("\nEscolha uma das opções: \n");
+                    scanf("%i", &opcao);
 
-                                                                                                                                                                                                                                                                    void posOrdem (No *raiz)
-                                                                                                                                                                                                                                                                    {
-                                                                                                                                                                                                                                                                        if (raiz != NULL)
-                                                                                                                                                                                                                                                                            {
-                                                                                                                                                                                                                                                                                    emOrdem(raiz->esquerda);
-                                                                                                                                                                                                                                                                                            preOrdem(raiz->direita);
-                                                                                                                                                                                                                                                                                                    printf("%s", raiz->valor);
-                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                        }
+                    switch (opcao)
+                    {
 
-                                                                                                                                                                                                                                                                                                        void liberar(No *raiz)
-                                                                                                                                                                                                                                                                                                        {
-                                                                                                                                                                                                                                                                                                            if (raiz != NULL)
-                                                                                                                                                                                                                                                                                                                {
-                                                                                                                                                                                                                                                                                                                        liberar(raiz->esquerda);
-                                                                                                                                                                                                                                                                                                                                liberar(raiz->direita);
-                                                                                                                                                                                                                                                                                                                                        free(raiz);
-                                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                                            }
+                        case 21:
+                            printf("Detetive entrou no cômodo: %s", raiz->direita->esquerda);
+                            break;
 
+                        case 22:
+                            printf("Detetive entrou no cômodo: %s", raiz->direita->direita);
+                            break;    
+                            
+                        case 0:
+                            posOrdem(raiz);
+                            printf("\n");            
+                            liberar(raiz);
+                            printf("saindo do sistema...");
+                            break;
+
+                        default:
+                            printf("Opção inválida! Tente novamente.");
+                            break;              
+
+                        
+                    } 
+                } while (opcao != 0);
+
+                
+                break;
+
+            case 0:
+                printf("Pós-ordem: ");
+                posOrdem(raiz);
+                printf("\n");            
+                liberar(raiz);
+                printf("saindo do sistema...");
+                break;      
+                
+            default:
+                printf("Opção inválida! Tente novamente.");
+                break;
+            }
+    } while (opcao != 0);
+    
+    return 0;
+}
+
+//função para criar nós como cômodos.
+Sala *criarSala(char *nomecomodo) 
+{
+    Sala *novo = (Sala*) malloc(sizeof(Sala));
+    strcpy(novo->nome, nomecomodo);
+    novo->esquerda = NULL;
+    novo->direita = NULL;
+    return novo;
+}
+
+/*Sala explorarSala()
+{
+
+}*/
+
+
+void liberar(Sala *raiz) 
+{
+    if (raiz != NULL) 
+    {
+        liberar(raiz->esquerda);
+        liberar(raiz->direita);
+        free(raiz);
+    }
+}
+
+void posOrdem(Sala *raiz) 
+{
+    if (raiz != NULL) 
+    {
+        posOrdem(raiz->esquerda);
+        posOrdem(raiz->direita);
+        printf("%s - ", raiz->nome);
+    }
+}
